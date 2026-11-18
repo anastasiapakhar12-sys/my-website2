@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>BioSchool — Онлайн-підготовка з біології (НМТ, ЗНО, Олімпіади)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome для іконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bio: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        accent: '#0284c7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
+
+    <!-- Навігація -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Логотип -->
+                <a href="#hero" class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-12 h-12 bg-gradient-to-tr from-bio-600 to-emerald-400 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shadow-bio-500/30">
+                        <i class="fa-solid font-bold fa-leaf"></i>
+                    </div>
+                    <div>
+                        <span class="font-heading font-extrabold text-2xl text-slate-900 tracking-tight">Bio<span class="text-bio-600">School</span></span>
+                        <p class="text-xs text-slate-500 font-medium">Твій крок до 200 балів</p>
+                    </div>
+                </a>
+
+                <!-- Меню навігації (Desktop) -->
+                <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600">
+                    <a href="#hero" class="hover:text-bio-600 transition">Головна</a>
+                    <a href="#features" class="hover:text-bio-600 transition">Переваги</a>
+                    <a href="#courses" class="hover:text-bio-600 transition">Курси</a>
+                    <a href="#teachers" class="hover:text-bio-600 transition">Викладачі</a>
+                    <a href="#news" class="hover:text-bio-600 transition">Новини та Блог</a>
+                </nav>
+
+                <!-- Кнопки дій -->
+                <div class="hidden md:flex items-center gap-4">
+                    <button onclick="openModal('addNewsModal')" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-medium transition">
+                        <i class="fa-solid fa-plus text-bio-600"></i>
+                        <span>Додати новину</span>
+                    </button>
+                    <a href="#contact" class="bg-bio-600 hover:bg-bio-700 text-white px-5 py-2.5 rounded-xl font-medium shadow-md shadow-bio-600/20 transition hover:shadow-lg">
+                        Записатися
+                    </a>
+                </div>
+
+                <!-- Мобільна кнопка меню -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-700 text-2xl p-2">
+                    <i class="fa-solid fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Мобільне меню -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block w-full text-left py-2 font-medium text-slate-700">Головна</a>
+            <a href="#features" onclick="toggleMobileMenu()" class="block w-full text-left py-2 font-medium text-slate-700">Переваги</a>
+            <a href="#courses" onclick="toggleMobileMenu()" class="block w-full text-left py-2 font-medium text-slate-700">Курси</a>
+            <a href="#teachers" onclick="toggleMobileMenu()" class="block w-full text-left py-2 font-medium text-slate-700">Викладачі</a>
+            <a href="#news" onclick="toggleMobileMenu()" class="block w-full text-left py-2 font-medium text-slate-700">Новини та Блог</a>
+            <hr class="my-2 border-slate-100">
+            <button onclick="openModal('addNewsModal'); toggleMobileMenu();" class="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-medium">
+                <i class="fa-solid fa-plus text-bio-600"></i>
+                <span>Додати новину</span>
+            </button>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-center bg-bio-600 text-white py-2.5 rounded-xl font-medium">
+                Записатися
+            </a>
+        </div>
+    </header>
+
+    <!-- ОСНОВНИЙ КОНТЕНТ -->
+    <main class="flex-grow">
+
+        <!-- Секція 1: Hero (Головна) -->
+        <section id="hero" class="relative overflow-hidden bg-gradient-to-b from-bio-50/60 to-transparent py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bio-100 text-bio-800 text-sm font-semibold mb-6">
+                            <i class="fa-solid fa-sparkles"></i> Набір на новий навчальний рік відкрито!
+                        </span>
+                        <h1 class="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-slate-900 leading-tight mb-6">
+                            Біологія — це легко, коли вчишся з <span class="text-transparent bg-clip-text bg-gradient-to-r from-bio-600 to-emerald-500">любов'ю</span>
+                        </h1>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                            Комплексна підготовка до НМТ, ЗНО та олімпіад з біології. Авторські інтерактивні конспекти, 3D-моделі клітин та анатомії, тренажери тестів.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#courses" class="bg-bio-600 hover:bg-bio-700 text-white text-center font-semibold px-8 py-4 rounded-xl shadow-lg shadow-bio-600/30 transition hover:-translate-y-0.5">
+                                Обрати курс
+                            </a>
+                            <a href="#news" class="bg-white hover:bg-slate-50 text-slate-700 text-center font-semibold px-8 py-4 rounded-xl border border-slate-200 transition">
+                                Читати Блог
+                            </a>
+                        </div>
+
+                        <!-- Статистика -->
+                        <div class="mt-10 grid grid-cols-3 gap-4 pt-8 border-t border-slate-200/80">
+                            <div>
+                                <p class="font-heading text-2xl sm:text-3xl font-extrabold text-bio-600">195+</p>
+                                <p class="text-xs sm:text-sm text-slate-500">Середній бал учнів</p>
+                            </div>
+                            <div>
+                                <p class="font-heading text-2xl sm:text-3xl font-extrabold text-bio-600">1200+</p>
+                                <p class="text-xs sm:text-sm text-slate-500">Випускників</p>
+                            </div>
+                            <div>
+                                <p class="font-heading text-2xl sm:text-3xl font-extrabold text-bio-600">98%</p>
+                                <p class="text-xs sm:text-sm text-slate-500">Вступників на бюджет</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Візуальний блок -->
+                    <div class="relative">
+                        <div class="w-full h-96 sm:h-[450px] bg-gradient-to-tr from-bio-600 to-teal-500 rounded-3xl overflow-hidden shadow-2xl relative flex items-center justify-center p-8">
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <div class="text-white text-center z-10 space-y-4">
+                                <div class="w-24 h-24 mx-auto bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-5xl mb-4 shadow-inner">
+                                    <i class="fa-solid fa-dna animate-pulse"></i>
+                                </div>
+                                <h3 class="font-heading text-2xl font-bold">Інтерактивне навчання</h3>
+                                <p class="text-bio-100 max-w-sm text-sm">Вивчайте ботаніку, зоологію, анатомію та генетику за візуалізованими схемами та практичними завданнями.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція 2: Переваги -->
+        <section id="features" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="font-heading text-3xl font-bold text-slate-900">Переваги навчання в BioSchool</h2>
+                    <p class="text-slate-600 mt-2">Ми перетворюємо складні біологічні теорії на зрозумілі та цікаві факти</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-bio-100 rounded-xl flex items-center justify-center text-bio-600 text-xl font-bold mb-4">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold mb-2">Наочні матеріали</h3>
+                        <p class="text-slate-600 text-sm">Жодних нудних підручників. Тільки яскраві авторські конспекти, 3D-ілюстрації та карти пам'яті.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-bio-100 rounded-xl flex items-center justify-center text-bio-600 text-xl font-bold mb-4">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold mb-2">Онлайн-платформа</h3>
+                        <p class="text-slate-600 text-sm">Всі записи вебінарів, домашні завдання та тести в єдиному зручному особистому кабінеті 24/7.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-bio-100 rounded-xl flex items-center justify-center text-bio-600 text-xl font-bold mb-4">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold mb-2">Підтримка кураторів</h3>
+                        <p class="text-slate-600 text-sm">Персональний ментор відповість на будь-яке запитання з біології протягом 15 хвилин.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція 3: Курси -->
+        <section id="courses" class="py-16 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900">Наші навчальні програми</h2>
+                    <p class="text-slate-600 mt-3">Оберіть курс відповідно до ваших цілей та рівня підготовки</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Курс 1 -->
+                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-bio-100 text-bio-800 text-xs font-bold uppercase tracking-wider">Флагманський</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 mt-4 mb-2">Річний курс НМТ 2027</h3>
+                            <p class="text-slate-600 text-sm mb-6">Повне вивчення всієї шкільної програми з біології від молекули до біосфери з нуля до 200 балів.</p>
+                            <div class="space-y-3 mb-8">
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>2 онлайн-вебінари на тиждень</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Авторський друкований WORKBOOK</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Понад 1500 практичних тестів</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Особистий куратор-біолог</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-2 mb-4">
+                                <span class="text-3xl font-extrabold text-slate-900">1 450 ₴</span>
+                                <span class="text-slate-500 text-sm">/ місяць</span>
+                            </div>
+                            <a href="#contact" class="block text-center w-full py-3 bg-bio-600 hover:bg-bio-700 text-white font-semibold rounded-xl shadow-md transition">
+                                Записатися на курс
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Курс 2 -->
+                    <div class="bg-white rounded-3xl p-8 border-2 border-bio-500 shadow-md relative flex flex-col justify-between">
+                        <div class="absolute -top-4 right-8 bg-bio-500 text-white text-xs font-bold uppercase px-3 py-1 rounded-full shadow"> Популярно </div>
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">Інтенсив</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 mt-4 mb-2">Експрес-повторення</h3>
+                            <p class="text-slate-600 text-sm mb-6">Швидка актуалізація знань та систематизація найскладніших тем за 3 місяці до іспиту.</p>
+                            <div class="space-y-3 mb-8">
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>3 експрес-заняття на тиждень</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Розбір «пасток» у темах НМТ</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Симуляції справжнього іспиту</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-2 mb-4">
+                                <span class="text-3xl font-extrabold text-slate-900">1 200 ₴</span>
+                                <span class="text-slate-500 text-sm">/ місяць</span>
+                            </div>
+                            <a href="#contact" class="block text-center w-full py-3 bg-bio-600 hover:bg-bio-700 text-white font-semibold rounded-xl shadow-md transition">
+                                Записатися на курс
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Курс 3 -->
+                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wider">Олімпіади</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 mt-4 mb-2">Олімпіадна Біологія</h3>
+                            <p class="text-slate-600 text-sm mb-6">Глибоке занурення в біохімію, молекулярну біологію та фізіологію для перемог в олімпіадах.</p>
+                            <div class="space-y-3 mb-8">
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Розв’язування задач високої складності</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Аналіз наукових статей</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-700">
+                                    <i class="fa-solid fa-check text-bio-600"></i>
+                                    <span>Індивідуальний фідбек викладача</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-2 mb-4">
+                                <span class="text-3xl font-extrabold text-slate-900">1 800 ₴</span>
+                                <span class="text-slate-500 text-sm">/ місяць</span>
+                            </div>
+                            <a href="#contact" class="block text-center w-full py-3 bg-bio-600 hover:bg-bio-700 text-white font-semibold rounded-xl shadow-md transition">
+                                Записатися на курс
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція 4: Викладачі -->
+        <section id="teachers" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900">Наші провідні викладачі</h2>
+                    <p class="text-slate-600 mt-3">Професіонали, які надихають на вивчення біології та результат</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-center hover:shadow-md transition">
+                        <img src="https://placehold.co/200x200/22c55e/ffffff?text=Олена+М." alt="Викладач" class="w-32 h-32 rounded-full mx-auto object-cover mb-4 shadow">
+                        <h3 class="font-heading text-xl font-bold text-slate-900">Олена Михайленко</h3>
+                        <p class="text-bio-600 text-sm font-medium mb-3">Головний викладач, Кандидат біологічних наук</p>
+                        <p class="text-slate-600 text-sm">Досвід викладання 9 років. Підготувала понад 45 двохсотбальників.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-center hover:shadow-md transition">
+                        <img src="https://placehold.co/200x200/0284c7/ffffff?text=Артем+К." alt="Викладач" class="w-32 h-32 rounded-full mx-auto object-cover mb-4 shadow">
+                        <h3 class="font-heading text-xl font-bold text-slate-900">Артем Ковальчук</h3>
+                        <p class="text-bio-600 text-sm font-medium mb-3">Експерт з генетики та біохімії</p>
+                        <p class="text-slate-600 text-sm">Призер Всеукраїнських олімпіад. Пояснює генетичні задачі «на пальцях».</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-center hover:shadow-md transition">
+                        <img src="https://placehold.co/200x200/16a34a/ffffff?text=Ірина+С." alt="Викладач" class="w-32 h-32 rounded-full mx-auto object-cover mb-4 shadow">
+                        <h3 class="font-heading text-xl font-bold text-slate-900">Ірина Савченко</h3>
+                        <p class="text-bio-600 text-sm font-medium mb-3">Методист курсу НМТ</p>
+                        <p class="text-slate-600 text-sm">Спеціаліст з ботаніки та екології. Створює найзручніші конспекти-шпори.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція 5: Новини та Статті -->
+        <section id="news" class="py-16 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Заголовок та фільтрація/кнопка -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+                    <div>
+                        <h2 class="font-heading text-3xl font-extrabold text-slate-900">Блог та Новини</h2>
+                        <p class="text-slate-600 mt-1">Останні оновлення, розбори складних тем та поради викладачів</p>
+                    </div>
+                    <button onclick="openModal('addNewsModal')" class="inline-flex items-center gap-2 bg-bio-600 hover:bg-bio-700 text-white px-5 py-3 rounded-xl font-semibold shadow-md transition self-start md:self-auto">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Опублікувати новину</span>
+                    </button>
+                </div>
+
+                <!-- Категорії новин -->
+                <div class="flex flex-wrap gap-2 mb-8" id="category-filters">
+                    <button onclick="filterNews('Всі')" class="cat-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-bio-600 text-white transition">Всі</button>
+                    <button onclick="filterNews('НМТ/ЗНО')" class="cat-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">НМТ/ЗНО</button>
+                    <button onclick="filterNews('Теорія')" class="cat-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">Теорія</button>
+                    <button onclick="filterNews('Події')" class="cat-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">Події школи</button>
+                </div>
+
+                <!-- Грид з новинами -->
+                <div id="news-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Заповнюється скриптом JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція 6: Запис на урок / Зворотний зв'язок -->
+        <section id="contact" class="py-16 bg-slate-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="font-heading text-3xl font-extrabold mb-4">Готові розпочати підготовку?</h2>
+                        <p class="text-slate-400 mb-8 leading-relaxed">
+                            Залиште свої дані, і наш консультант зв'яжеться з вами для підбору найкращої програми навчання та надання безкоштовного пробного уроку.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-bio-600/20 text-bio-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <span class="text-slate-300 font-medium">+380 (800) 33-44-55</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-bio-600/20 text-bio-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <span class="text-slate-300 font-medium">info@bioschool.ua</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl">
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Ім'я учня або батьків</label>
+                                <input type="text" required placeholder="Олександр" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-bio-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Номер телефону</label>
+                                <input type="tel" required placeholder="+380 (00) 000-00-00" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-bio-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Клас / Ціль</label>
+                                <select class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-bio-500">
+                                    <option>11 клас (НМТ 2027)</option>
+                                    <option>10 клас (Базовий курс)</option>
+                                    <option>Підготовка до олімпіад</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full py-4 bg-bio-600 hover:bg-bio-700 font-semibold text-white rounded-xl shadow-lg transition">
+                                Записатися на безкоштовний урок
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Повний перегляд новини -->
+    <div id="readNewsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('readNewsModal')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="readNewsContent">
+                <!-- Заповнюється JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: Додавання новини -->
+    <div id="addNewsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('addNewsModal')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 class="font-heading text-2xl font-bold text-slate-900 mb-6">Опублікувати нову статтю або новину</h2>
+            
+            <form onsubmit="handleCreateNews(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Заголовок новини</label>
+                    <input type="text" id="newsTitle" required placeholder="Наприклад: 5 типових помилок при вирішенні задач з генетики" class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-bio-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Категорія</label>
+                    <select id="newsCategory" class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-bio-500">
+                        <option value="НМТ/ЗНО">НМТ/ЗНО</option>
+                        <option value="Теорія">Теорія біології</option>
+                        <option value="Події">Події школи</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Короткий опис (анонс)</label>
+                    <textarea id="newsSummary" required rows="2" placeholder="Короткий опис для картки..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-bio-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Повний текст новини</label>
+                    <textarea id="newsContent" required rows="5" placeholder="Основний текст публікації..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-bio-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Автор</label>
+                    <input type="text" id="newsAuthor" required placeholder="Викладач Олена М." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-bio-500">
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeModal('addNewsModal')" class="px-5 py-2.5 border border-slate-300 rounded-xl font-medium text-slate-600 hover:bg-slate-100">
+                        Скасувати
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 bg-bio-600 hover:bg-bio-700 text-white rounded-xl font-semibold shadow-md">
+                        Опублікувати
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Спливаюче повідомлення (Toast Notification) -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl border border-slate-700 hidden flex items-center gap-3 z-50">
+        <i class="fa-solid fa-circle-check text-bio-500 text-xl"></i>
+        <span id="toast-message">Повідомлення</span>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-bio-600 rounded-xl flex items-center justify-center text-white text-xl">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <span class="font-heading font-extrabold text-xl text-white">BioSchool</span>
+                </div>
+                <p class="text-sm">&copy; 2026 BioSchool. Усі права захищено. Підготовка до НМТ з біології.</p>
+                <div class="flex gap-4 text-xl">
+                    <a href="#" class="hover:text-bio-500 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-bio-500 transition"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="#" class="hover:text-bio-500 transition"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипти JS -->
+    <script>
+        // Початкові дані для новин
+        const initialNews = [
+            {
+                id: 1,
+                title: "Як правильно запам'ятати фази мітозу та мейозу без зазубрювання?",
+                category: "Теорія",
+                date: "04 Листопада 2026",
+                author: "Олена Михайленко",
+                summary: "Прості асоціації та лайфхаки для розрізнення анафази, метафази та профази у тестах НМТ.",
+                content: "Поділ клітини — одна з найважливіших тем у програмі з біології. Студенти часто плутають, на якій саме стадії хромосоми вишиковуються по екватору клітини. У цій статті ми розберемо правило «М-метафаза — Межа» та інші мнемонічні прийоми, які допоможуть вам швидко орієнтуватися в графічних питаннях НМТ."
+            },
+            {
+                id: 2,
+                title: "Зміни у програмі НМТ 2026/2027: на що звернути увагу",
+                category: "НМТ/ЗНО",
+                date: "01 Листопада 2026",
+                author: "Артем Ковальчук",
+                summary: "Аналіз оновлених блоків питань з екології та біохімії від наших експертів.",
+                content: "Оновлення тестових завдань передбачає більше практичноорієнтованих задач та табличних співставлень. Зверніть особливу увагу на розрахункові задачі з молекулярної біології (довжина ДНК, маса білка, кількість водневих зв'язків). Розбираємо приклади задач нових типів у нашому матеріалі."
+            },
+            {
+                id: 3,
+                title: "Відкрито реєстрацію на БЕЗКОШТОВНИЙ вебінар з фотосинтезу",
+                category: "Події",
+                date: "28 Жовтня 2026",
+                author: "Ірина Савченко",
+                summary: "Приєднуйтесь до відкритого уроку вже цього четверга о 18:00!",
+                content: "Світлова та темнова фази фотосинтезу викликають труднощі? Запрошуємо на безкоштовний інтенсив, де ми за 60 хвилин розкладемо по поличках роль хлорофілу, фотоліз води та цикл Кальвіна. Кожен учасник отримає шпаргалку у подарунок."
+            }
+        ];
+
+        // Завантаження новин з localStorage або збереження початкових
+        let newsData = JSON.parse(localStorage.getItem('bioschool_news')) || initialNews;
+        if (!localStorage.getItem('bioschool_news')) {
+            localStorage.setItem('bioschool_news', JSON.stringify(initialNews));
+        }
+
+        let currentCategory = 'Всі';
+
+        // Ініціалізація
+        window.onload = function () {
+            renderNews();
+        };
+
+        // Рендеринг новин на вкладці "Новини"
+        function renderNews() {
+            const container = document.getElementById('news-grid');
+            if (!container) return;
+
+            const filteredNews = currentCategory === 'Всі' 
+                ? newsData 
+                : newsData.filter(item => item.category === currentCategory);
+
+            if (filteredNews.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-500 text-lg">Публікацій у цій категорії поки немає.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredNews.map(item => `
+                <article class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-bio-100 text-bio-800">${item.category}</span>
+                            <span class="text-xs text-slate-400">${item.date}</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mb-3 hover:text-bio-600 transition cursor-pointer" onclick="openReadNews(${item.id})">
+                            ${item.title}
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            ${item.summary}
+                        </p>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-slate-100 mt-auto">
+                        <span class="text-xs text-slate-500 font-medium"><i class="fa-regular fa-user mr-1"></i> ${item.author}</span>
+                        <div class="flex items-center gap-3">
+                            <button onclick="deleteNews(${item.id})" class="text-red-500 hover:text-red-700 font-semibold text-sm transition flex items-center gap-1">
+                                <i class="fa-solid fa-trash-can"></i> Видалити
+                            </button>
+                            <button onclick="openReadNews(${item.id})" class="text-bio-600 font-semibold text-sm hover:underline flex items-center gap-1">
+                                Читати <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Фільтрація новин
+        function filterNews(category) {
+            currentCategory = category;
+            
+            // Оновлення стилів кнопок фільтрації
+            const buttons = document.querySelectorAll('.cat-filter-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === category) {
+                    btn.className = 'cat-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-bio-600 text-white transition';
+                } else {
+                    btn.className = 'cat-filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition';
+                }
+            });
+
+            renderNews();
+        }
+
+        // Додавання нової новини з форми
+        function handleCreateNews(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const summary = document.getElementById('newsSummary').value;
+            const content = document.getElementById('newsContent').value;
+            const author = document.getElementById('newsAuthor').value;
+
+            const newArticle = {
+                id: Date.now(),
+                title,
+                category,
+                date: new Date().toLocaleDateString('uk-UA', { day: '2-digit', month: 'long', year: 'numeric' }),
+                author,
+                summary,
+                content
+            };
+
+            // Додаємо новину на початок масиву
+            newsData.unshift(newArticle);
+            localStorage.setItem('bioschool_news', JSON.stringify(newsData));
+
+            // Оновлюємо відображення
+            renderNews();
+
+            // Закриваємо модалку та очищаємо форму
+            closeModal('addNewsModal');
+            e.target.reset();
+
+            showToast("Новину успішно опубліковано!");
+        }
+
+        // Видалення новини
+        function deleteNews(id) {
+            newsData = newsData.filter(item => item.id !== id);
+            localStorage.setItem('bioschool_news', JSON.stringify(newsData));
+            renderNews();
+            showToast("Новину видалено!");
+        }
+
+        // Відкриття для читання повної новини
+        function openReadNews(id) {
+            const article = newsData.find(n => n.id === id);
+            if (!article) return;
+
+            const contentDiv = document.getElementById('readNewsContent');
+            contentDiv.innerHTML = `
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-bio-100 text-bio-800">${article.category}</span>
+                <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 mb-4">${article.title}</h2>
+                <div class="flex items-center gap-4 text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">
+                    <span><i class="fa-regular fa-user mr-1"></i> ${article.author}</span>
+                    <span><i class="fa-regular fa-calendar mr-1"></i> ${article.date}</span>
+                </div>
+                <div class="prose max-w-none text-slate-700 leading-relaxed whitespace-pre-line text-base">
+                    ${article.content}
+                </div>
+            `;
+
+            openModal('readNewsModal');
+        }
+
+        // Обробка відправки форми запису на курс
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            showToast("Дякуємо! Заявку прийнято. Ми зателефонуємо вам за 10 хвилин.");
+        }
+
+        // Модальні вікна універсально
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Мобільне меню
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Сповіщення Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

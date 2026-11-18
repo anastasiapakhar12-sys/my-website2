@@ -1,0 +1,200 @@
+/* =========================================
+   BioSchool — основні стилі сайту
+   ========================================= */
+
+/* Кольори та загальні налаштування */
+:root {
+    --bio-50: #f0fdf4;
+    --bio-100: #dcfce7;
+    --bio-500: #22c55e;
+    --bio-600: #16a34a;
+    --bio-700: #15803d;
+    --bio-800: #166534;
+    --bio-900: #14532d;
+    --accent: #0284c7;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --page-bg: #f8fafc;
+    --card-radius: 1.5rem;
+    --soft-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+}
+
+body {
+    margin: 0;
+    color: var(--text-main);
+    background: var(--page-bg);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Заголовки */
+h1, h2, h3,
+.font-heading {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Навігація */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+header a {
+    text-decoration: none;
+}
+
+/* Посилання та кнопки */
+a {
+    transition: color 0.2s ease, background-color 0.2s ease,
+                box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+button {
+    transition: color 0.2s ease, background-color 0.2s ease,
+                border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(34, 197, 94, 0.45);
+    outline-offset: 3px;
+}
+
+/* Картки та блоки */
+#features .grid > div,
+#teachers .grid > div,
+#courses .grid > div,
+#news-grid article {
+    border-radius: var(--card-radius);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#features .grid > div:hover,
+#teachers .grid > div:hover,
+#courses .grid > div:hover,
+#news-grid article:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--soft-shadow);
+}
+
+/* Зображення викладачів */
+#teachers img {
+    display: block;
+    object-fit: cover;
+}
+
+/* Форми */
+form input,
+form select,
+form textarea {
+    width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--bio-500);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+    outline: none;
+}
+
+/* Модальні вікна */
+#readNewsModal,
+#addNewsModal {
+    z-index: 100;
+}
+
+#readNewsModal > div,
+#addNewsModal > div {
+    animation: modalAppear 0.22s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Повідомлення */
+#toast {
+    z-index: 120;
+    animation: toastAppear 0.25s ease-out;
+}
+
+@keyframes toastAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Мобільна адаптація */
+@media (max-width: 767px) {
+    html {
+        scroll-padding-top: 1rem;
+    }
+
+    #hero {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    #contact form {
+        padding: 1.25rem;
+    }
+
+    #toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
